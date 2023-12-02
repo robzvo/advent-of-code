@@ -55,10 +55,18 @@ with open("input.txt") as f:
 
 sum = 0
 
+#part 2
+sum_of_powers = 0
+
 #for each game
 for game in input:
     # assume game is valid until proven otherwise
     valid_game = True
+
+    #part 2
+    min_red = 0
+    min_blue = 0
+    min_green = 0
 
     # for each set in the game
     for set in game['sets']:
@@ -69,9 +77,28 @@ for game in input:
                 #if not valid
                 if e['color'] == key and e['count'] > value:
                     valid_game = False
-                    
+
+            #part 2 - find minimum number of cubes needed to make the game valid   
+            match e['color']:
+                case 'red':
+                    if e['count'] > min_red:
+                        min_red = e['count']
+                case 'blue':
+                    if e['count'] > min_blue:
+                        min_blue = e['count']
+                case 'green':
+                    if e['count'] > min_green:
+                        min_green = e['count']
+
+    # part 2 - sum of powers
+    power = min_red * min_blue * min_green
+    sum_of_powers += power
+    
     # sum game id if the game was valid
     if valid_game:
         sum += game['game']
 
 print(sum)
+
+#part 2
+print(sum_of_powers)
